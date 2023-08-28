@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { produce } from "immer";
+import { Draft, produce } from "immer";
 
 interface Emotion {
   id: number;
@@ -32,6 +32,34 @@ const Home = () => {
     },
   ]);
 
+  const toggleSpecific = (emotionId: number, specificName: string) => {
+    const updatedState = produce((draft) => {
+      const foundEmotion = draft.find((e) => e.id === emotionId)!;
+      const foundSpecific = foundEmotion.specifics.find(
+        (s) => s.name === specificName
+      )!;
+      foundSpecific.selected = !foundSpecific.selected;
+    }, emotions);
+
+    setEmotions(updatedState);
+  };
+
+  const percentageCellSetValue = (emotionId: number, value: number, type: 'Before' | 'After') => {
+
+    const updatedState = produce((draft) => {
+      const foundEmotion = draft.find((e) => e.id === emotionId)!;
+
+      if (type === 'Before') {
+        foundEmotion.percentage.before = value;
+      } else {
+        foundEmotion.percentage.after = value;
+      }
+
+    }, emotions)
+
+    setEmotions(updatedState);
+  }
+
   return (
     <div className="overflow-x-auto border-x border-t">
       <table className="table-auto w-full">
@@ -49,30 +77,19 @@ const Home = () => {
                 <td className="p-4">
                   {emotion.specifics.map((specific, i) => {
                     return (
-                      <Specific
+                      <SpecificCell
                         name={specific.name}
                         selected={specific.selected}
                         onclick={() => {
-                          setEmotions(
-                            produce((draft) => {
-                              const foundEmotion = draft.find(
-                                (e) => e.id === emotion.id
-                              )!;
-                              const foundSpecific =
-                                foundEmotion.specifics.find(
-                                  (s) => s.name === specific.name
-                                )!;
-                              foundSpecific.selected = !foundSpecific.selected;
-                            })
-                          );
+                          toggleSpecific(key, specific.name);
                         }}
                         key={i}
-                      ></Specific>
+                      ></SpecificCell>
                     );
                   })}
                 </td>
-                <td className="p-4">{emotion.percentage.before}</td>
-                <td className="p-4">{emotion.percentage.after}</td>
+                <PercentageCell setValue={(value) => percentageCellSetValue(key, value, 'Before')} value={emotion.percentage.before}></PercentageCell>
+                <PercentageCell setValue={(value) => percentageCellSetValue(key, value, 'After')} value={emotion.percentage.after}></PercentageCell>
               </tr>
             );
           })}
@@ -82,13 +99,13 @@ const Home = () => {
   );
 };
 
-interface SpecificProps {
+interface SpecificCellProps {
   name: string;
   selected: boolean;
   onclick: () => void;
 }
 
-const Specific = (props: SpecificProps) => {
+const SpecificCell = (props: SpecificCellProps) => {
   const selectedClassName = "mr-1";
   const unselectedClassName = "mr-1";
 
@@ -97,9 +114,30 @@ const Specific = (props: SpecificProps) => {
       onClick={props.onclick}
       className={props.selected ? selectedClassName : unselectedClassName}
     >
-      {props.name} {props.selected ? '✅' : '❌'}
+      {props.name} {props.selected ? "✅" : "❌"}
     </span>
   );
 };
 
 export default Home;
+
+
+interface PercentageCellProps {
+  value: number
+  setValue: (value: number) => void
+}
+
+const PercentageCell = (props: PercentageCellProps) => {
+
+  const onCellChange = (e: React.FormEvent<HTMLInputElement>) => {
+
+    // Apply validation logic
+    const cellValue = Number(e.currentTarget.value);
+    isNaN(cellValue) ? props.setValue(0) : props.setValue(Math.min(Math.max(cellValue, 0), 100));
+  }
+
+  return (
+    <td className="p-4"><input value={props.value} onChange={onCellChange}></input></td>
+  )
+
+}
