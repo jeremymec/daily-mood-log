@@ -1,7 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { Draft, produce } from "immer";
+import { produce } from "immer";
+import { PercentageCell } from "./PercentageCell";
+import { SpecificCell } from "./SpecificCell";
+
+type Distortion = "A" | "B"
 
 interface Emotion {
   id: number;
@@ -15,7 +19,24 @@ interface Emotion {
   };
 }
 
+interface NegativeThought {
+  number: number;
+  text: string;
+  percentage: {
+    before: number;
+    after: number;
+  };
+  distortions: Distortion[];
+}
+
+interface PositiveThought {
+  number: number;
+  text: string;
+  belief_percentage: number;
+}
+
 const Home = () => {
+  const [upsettingEvent, setUpsettingEvent] = useState<string>("");
   const [emotions, setEmotions] = useState<Emotion[]>([
     {
       id: 0,
@@ -44,24 +65,36 @@ const Home = () => {
     setEmotions(updatedState);
   };
 
-  const percentageCellSetValue = (emotionId: number, value: number, type: 'Before' | 'After') => {
-
+  const percentageCellSetValue = (
+    emotionId: number,
+    value: number,
+    type: "Before" | "After"
+  ) => {
     const updatedState = produce((draft) => {
       const foundEmotion = draft.find((e) => e.id === emotionId)!;
 
-      if (type === 'Before') {
+      if (type === "Before") {
         foundEmotion.percentage.before = value;
       } else {
         foundEmotion.percentage.after = value;
       }
-
-    }, emotions)
+    }, emotions);
 
     setEmotions(updatedState);
-  }
+  };
 
   return (
     <div className="overflow-x-auto border-x border-t">
+      <div className="text-center m-5">
+        <span className="text-lg mr-2 bold">Upsetting Event: </span>
+        <input
+          className="w-1/3 border-gray-400 outline-none border-b text-lg"
+          placeholder="Please type the event here"
+          value={upsettingEvent}
+          onChange={(e) => setUpsettingEvent(e.currentTarget.value)}
+        ></input>
+      </div>
+
       <table className="table-auto w-full">
         <thead className="border-b">
           <tr className="bg-gray-100">
@@ -88,8 +121,18 @@ const Home = () => {
                     );
                   })}
                 </td>
-                <PercentageCell setValue={(value) => percentageCellSetValue(key, value, 'Before')} value={emotion.percentage.before}></PercentageCell>
-                <PercentageCell setValue={(value) => percentageCellSetValue(key, value, 'After')} value={emotion.percentage.after}></PercentageCell>
+                <PercentageCell
+                  setValue={(value) =>
+                    percentageCellSetValue(key, value, "Before")
+                  }
+                  value={emotion.percentage.before}
+                ></PercentageCell>
+                <PercentageCell
+                  setValue={(value) =>
+                    percentageCellSetValue(key, value, "After")
+                  }
+                  value={emotion.percentage.after}
+                ></PercentageCell>
               </tr>
             );
           })}
@@ -99,45 +142,4 @@ const Home = () => {
   );
 };
 
-interface SpecificCellProps {
-  name: string;
-  selected: boolean;
-  onclick: () => void;
-}
-
-const SpecificCell = (props: SpecificCellProps) => {
-  const selectedClassName = "mr-1";
-  const unselectedClassName = "mr-1";
-
-  return (
-    <span
-      onClick={props.onclick}
-      className={props.selected ? selectedClassName : unselectedClassName}
-    >
-      {props.name} {props.selected ? "✅" : "❌"}
-    </span>
-  );
-};
-
 export default Home;
-
-
-interface PercentageCellProps {
-  value: number
-  setValue: (value: number) => void
-}
-
-const PercentageCell = (props: PercentageCellProps) => {
-
-  const onCellChange = (e: React.FormEvent<HTMLInputElement>) => {
-
-    // Apply validation logic
-    const cellValue = Number(e.currentTarget.value);
-    isNaN(cellValue) ? props.setValue(0) : props.setValue(Math.min(Math.max(cellValue, 0), 100));
-  }
-
-  return (
-    <td className="p-4"><input value={props.value} onChange={onCellChange}></input></td>
-  )
-
-}
