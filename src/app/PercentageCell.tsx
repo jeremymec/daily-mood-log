@@ -2,6 +2,7 @@
 interface PercentageCellProps {
   value: number;
   setValue: (value: number) => void;
+  customTailwindStyles?: string
 }
 export const PercentageCell = (props: PercentageCellProps) => {
 
@@ -13,7 +14,7 @@ export const PercentageCell = (props: PercentageCellProps) => {
   };
 
   return (
-    <td className="p-4"><input value={props.value} onChange={onCellChange}></input></td>
+    <td className={`${props.customTailwindStyles}`}><input className="p-4 w-full" value={props.value} onChange={onCellChange}></input></td>
   );
 
 };
