@@ -78,7 +78,7 @@ const Home = () => {
   }
 
   return (
-    <div className="overflow-x-auto border-x border-t px-32">
+    <div className="overflow-x-auto border-x border-t px-32 h-screen">
       <div className="text-center m-5">
         <span className="text-lg mr-2 bold">Upsetting Event: </span>
         <input

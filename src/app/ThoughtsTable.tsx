@@ -2,6 +2,7 @@
 import { produce } from "immer";
 import { PercentageCell } from "./PercentageCell";
 import { NegativeThought } from "./page";
+import TextareaAutosize from "react-textarea-autosize";
 
 export interface ThoughtsTableProps {
   negativeThoughts: NegativeThought[];
@@ -37,7 +38,7 @@ export const ThoughtsTable = (props: ThoughtsTableProps) => {
   };
 
   const onNegativeThoughtTextChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
+    e: React.ChangeEvent<HTMLTextAreaElement>,
     thoughtNumber: number
   ) => {
     const updatedState = produce((draft) => {
@@ -50,7 +51,7 @@ export const ThoughtsTable = (props: ThoughtsTableProps) => {
   };
 
   const onPositiveThoughtTextChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
+    e: React.ChangeEvent<HTMLTextAreaElement>,
     thoughtNumber: number
   ) => {
     const updatedState = produce((draft) => {
@@ -96,105 +97,110 @@ export const ThoughtsTable = (props: ThoughtsTableProps) => {
   };
 
   return (
-    <table className="table-fixed w-full">
-      <thead className="border-b">
-        <tr className="bg-gray-100">
-          <th className="text-left p-4 font-medium w-[27.9%]">Negative Thoughts</th>
-          <th className="text-left p-4 font-medium w-1/12">% Before</th>
-          <th className="text-left p-4 font-medium w-1/12">% After</th>
-          <th className="text-left p-4 font-medium w-2/12">Distortions</th>
-          <th className="text-left p-4 font-medium w-[27.9%]">Positve Thoughts</th>
-          <th className="text-left p-4 font-medium w-1/12">% Belief</th>
-          <th className="text-left p-4 font-medium w-"></th>
-        </tr>
-      </thead>
-      <tbody>
-        {props.negativeThoughts.map((negativeThought, key) => {
-          return (
-            <tr key={key} className="border-b hover:bg-gray-50">
-              <td className="p-4 border-r-2 w-[27.9%]">
-                <textarea
-                  value={negativeThought.text}
-                  className="w-full"
-                  onChange={(e) =>
-                    onNegativeThoughtTextChange(e, negativeThought.number)
-                  }
-                  placeholder="Enter text here..."
-                ></textarea>
-              </td>
-              <PercentageCell
-                setValue={(value) =>
-                  percentageCellSetValue(
-                    negativeThought.number,
-                    value,
-                    "Before"
-                  )
-                }
-                value={negativeThought.percentage.before}
-                customTailwindStyles="border-r-2 w-1/12"
-              ></PercentageCell>
-              <PercentageCell
-                setValue={(value) =>
-                  percentageCellSetValue(negativeThought.number, value, "After")
-                }
-                value={negativeThought.percentage.after}
-                customTailwindStyles="w-1 border-r-2"
-              ></PercentageCell>
-              <td className="p-4 border-r-2">{negativeThought.distortions}</td>
-              <td className="p-4 border-r-2">
-                <textarea
-                  value={negativeThought.positiveThought.text}
-                  className="w-full"
-                  onChange={(e) =>
-                    onPositiveThoughtTextChange(e, negativeThought.number)
-                  }
-                  placeholder="Enter text here..."
-                ></textarea>
-              </td>
-              <PercentageCell
-                setValue={(value) =>
-                  percentageCellSetValue(
-                    negativeThought.number,
-                    value,
-                    "Belief"
-                  )
-                }
-                value={negativeThought.positiveThought.beliefPercentage}
-                customTailwindStyles="border-r-2"
-              ></PercentageCell>
-              <td>
+    <div>
+      <table className="table-fixed w-full">
+        <thead className="border-b">
+          <tr className="bg-gray-100">
+            <th className="text-left p-4 font-medium w-"></th>
+            <th className="text-left p-4 font-medium w-[27.9%]">
+              Negative Thoughts
+            </th>
+            <th className="text-left p-4 font-medium w-1/12">% Before</th>
+            <th className="text-left p-4 font-medium w-1/12">% After</th>
+            <th className="text-left p-4 font-medium w-2/12">Distortions</th>
+            <th className="text-left p-4 font-medium w-[27.9%]">
+              Positive Thoughts
+            </th>
+            <th className="text-left p-4 font-medium w-1/12">% Belief</th>
+          </tr>
+        </thead>
+        <tbody className="w-full">
+          {props.negativeThoughts.map((negativeThought, key) => {
+            return (
+              <tr key={key} className="border-b hover:bg-gray-50 h-auto">
                 {negativeThought.number !== 1 ? (
-                  <button
+                  <td
                     className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
                     onClick={() =>
                       onRemoveThoughtButtonPress(negativeThought.number)
                     }
                   >
                     -
-                  </button>
+                  </td>
                 ) : (
-                  <button
-                    className="bg-red-200 text-white font-bold py-2 px-4 rounded"
-                    disabled={true}
-                  >
+                  <td className="bg-red-200 text-white font-bold py-2 px-4 rounded h-">
                     -
-                  </button>
+                  </td>
                 )}
-              </td>
-            </tr>
-          );
-        })}
-        <tr>
-          <td>
-            <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-              onClick={onAddThoughtButtonPress}
-            >
-              +
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+                <td className="p-4 h-auto border-r-2 w-[27.9%]">
+                  <TextareaAutosize
+                    className="w-full h-auto"
+                    value={negativeThought.text}
+                    onChange={(e) =>
+                      onNegativeThoughtTextChange(e, negativeThought.number)
+                    }
+                    placeholder="Enter text here..."
+                    minRows={2}
+                  ></TextareaAutosize>
+                </td>
+                <PercentageCell
+                  setValue={(value) =>
+                    percentageCellSetValue(
+                      negativeThought.number,
+                      value,
+                      "Before"
+                    )
+                  }
+                  value={negativeThought.percentage.before}
+                  customTailwindStyles="border-r-2 w-1/12"
+                ></PercentageCell>
+                <PercentageCell
+                  setValue={(value) =>
+                    percentageCellSetValue(
+                      negativeThought.number,
+                      value,
+                      "After"
+                    )
+                  }
+                  value={negativeThought.percentage.after}
+                  customTailwindStyles="w-1 border-r-2"
+                ></PercentageCell>
+                <td className="p-4 border-r-2">
+                  {negativeThought.distortions}
+                </td>
+                <td className="p-4 border-r-2">
+                  <TextareaAutosize
+                    value={negativeThought.positiveThought.text}
+                    className="w-full"
+                    onChange={(e) =>
+                      onPositiveThoughtTextChange(e, negativeThought.number)
+                    }
+                    placeholder="Enter text here..."
+                    minRows={2}
+                  ></TextareaAutosize>
+                </td>
+                <PercentageCell
+                  setValue={(value) =>
+                    percentageCellSetValue(
+                      negativeThought.number,
+                      value,
+                      "Belief"
+                    )
+                  }
+                  value={negativeThought.positiveThought.beliefPercentage}
+                  customTailwindStyles="border-r-2"
+                ></PercentageCell>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+      <button
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full"
+        onClick={onAddThoughtButtonPress}
+      >
+        +
+      </button>
+    </div>
   );
 };
