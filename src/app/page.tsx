@@ -4,13 +4,14 @@ import { useState } from "react";
 import { EmotionsTable } from "./EmotionsTable";
 import { ThoughtsTable } from "./ThoughtsTable";
 
-type Distortion = "A" | "B"
+type Distortion = "A" | "B";
 
 export interface Emotion {
   id: number;
   specifics: {
     name: string;
     selected: boolean;
+    color: string;
   }[];
   percentage: {
     before: number;
@@ -26,7 +27,7 @@ export interface NegativeThought {
     after: number;
   };
   distortions: Distortion[];
-  positiveThought: PositiveThought
+  positiveThought: PositiveThought;
 }
 
 export interface PositiveThought {
@@ -41,41 +42,50 @@ const Home = () => {
     {
       id: 0,
       specifics: [
-        { name: "Sad", selected: false },
-        { name: "blue", selected: false },
+        { name: "Sad", selected: false, color: "#27acd9"},
+        { name: "blue", selected: false, color: "#166960"},
+        { name: "depressed", selected: false, color: "#2168cc"},
+        { name: "down", selected: false, color: "#0f305e"},
+        { name: "unhappy", selected: false, color: "#1625c9"},
       ],
       percentage: { before: 0, after: 0 },
     },
     {
       id: 1,
-      specifics: [{ name: "Sad", selected: false }],
+      specifics: [{ name: "Anxious", selected: false, color: "#b09f1a"}],
       percentage: { before: 0, after: 0 },
     },
   ]);
   const [negativeThoughts, setNegativeThoughts] = useState<NegativeThought[]>([
     {
-      text: '',
+      text: "",
       number: 1,
       percentage: {
         before: 0,
-        after: 0
+        after: 0,
       },
       distortions: [],
       positiveThought: {
-        text: '',
+        text: "",
         beliefPercentage: 0,
-        number: 1
-      }
-    }
+        number: 1,
+      },
+    },
   ]);
 
-  const setEmotionsCallback = (emotions: (state?: Emotion[] | undefined) => Emotion[]) => {
+  const setEmotionsCallback = (
+    emotions: (state?: Emotion[] | undefined) => Emotion[]
+  ) => {
     setEmotions(emotions);
-  }
+  };
 
-  const setNegativeThoughtsCallback = (negativeThoughts: (state?: NegativeThought[] | undefined) => NegativeThought[]) => {
+  const setNegativeThoughtsCallback = (
+    negativeThoughts: (
+      state?: NegativeThought[] | undefined
+    ) => NegativeThought[]
+  ) => {
     setNegativeThoughts(negativeThoughts);
-  }
+  };
 
   return (
     <div className="overflow-x-auto border-x border-t px-32 h-screen">
@@ -88,10 +98,16 @@ const Home = () => {
           onChange={(e) => setUpsettingEvent(e.currentTarget.value)}
         ></input>
       </div>
-    
-    <EmotionsTable emotions={emotions} setEmotionsCallback={setEmotionsCallback}></EmotionsTable>
-    <br></br>
-    <ThoughtsTable negativeThoughts={negativeThoughts} setThoughtsCallback={setNegativeThoughtsCallback}></ThoughtsTable>
+
+      <EmotionsTable
+        emotions={emotions}
+        setEmotionsCallback={setEmotionsCallback}
+      ></EmotionsTable>
+      <br></br>
+      <ThoughtsTable
+        negativeThoughts={negativeThoughts}
+        setThoughtsCallback={setNegativeThoughtsCallback}
+      ></ThoughtsTable>
     </div>
   );
 };

@@ -120,7 +120,7 @@ export const ThoughtsTable = (props: ThoughtsTableProps) => {
               <tr key={key} className="border-b hover:bg-gray-50 h-auto">
                 {negativeThought.number !== 1 ? (
                   <td
-                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                    className="bg-red-500 hover:bg-red-700 text-white font-bold rounded text-center"
                     onClick={() =>
                       onRemoveThoughtButtonPress(negativeThought.number)
                     }
@@ -128,13 +128,13 @@ export const ThoughtsTable = (props: ThoughtsTableProps) => {
                     -
                   </td>
                 ) : (
-                  <td className="bg-red-200 text-white font-bold py-2 px-4 rounded h-">
+                  <td className="bg-red-200 text-white font-bold rounded text-center">
                     -
                   </td>
                 )}
                 <td className="p-4 h-auto border-r-2 w-[27.9%]">
                   <TextareaAutosize
-                    className="w-full h-auto"
+                    className="w-full h-auto outline-none"
                     value={negativeThought.text}
                     onChange={(e) =>
                       onNegativeThoughtTextChange(e, negativeThought.number)
@@ -171,7 +171,7 @@ export const ThoughtsTable = (props: ThoughtsTableProps) => {
                 <td className="p-4 border-r-2">
                   <TextareaAutosize
                     value={negativeThought.positiveThought.text}
-                    className="w-full"
+                    className="w-full outline-none"
                     onChange={(e) =>
                       onPositiveThoughtTextChange(e, negativeThought.number)
                     }
