@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 interface PercentageCellProps {
   value: number;
   setValue: (value: number) => void;
+  gradientEnabled: boolean;
   customTailwindStyles?: string;
 }
 export const PercentageCell = (props: PercentageCellProps) => {
@@ -19,7 +20,9 @@ export const PercentageCell = (props: PercentageCellProps) => {
   };
 
   useEffect(() => {
-    setBgHexCode(hslToHex((props.value), 50, 70));
+    if (props.gradientEnabled) {
+      setBgHexCode(hslToHex((props.value), 50, 70));
+    }
   }, [props.value])
 
   // Credit to icl7126 from stackoverflow.com

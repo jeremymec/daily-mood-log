@@ -101,17 +101,17 @@ export const ThoughtsTable = (props: ThoughtsTableProps) => {
       <table className="table-fixed w-full">
         <thead className="border-b">
           <tr className="bg-gray-100">
-            <th className="text-left p-4 font-medium w-"></th>
-            <th className="text-left p-4 font-medium w-[27.9%]">
+            <th className="text-center p-4 font-medium w-"></th>
+            <th className="text-center p-4 font-medium w-[27.9%]">
               Negative Thoughts
             </th>
-            <th className="text-left p-4 font-medium w-1/12">% Before</th>
-            <th className="text-left p-4 font-medium w-1/12">% After</th>
-            <th className="text-left p-4 font-medium w-2/12">Distortions</th>
-            <th className="text-left p-4 font-medium w-[27.9%]">
+            <th className="text-center p-4 font-medium w-1/12">% Before</th>
+            <th className="text-center p-4 font-medium w-1/12">% After</th>
+            <th className="text-center p-4 font-medium w-2/12">Distortions</th>
+            <th className="text-center p-4 font-medium w-[27.9%]">
               Positive Thoughts
             </th>
-            <th className="text-left p-4 font-medium w-1/12">% Belief</th>
+            <th className="text-center p-4 font-medium w-1/12">% Belief</th>
           </tr>
         </thead>
         <tbody className="w-full">
@@ -153,6 +153,7 @@ export const ThoughtsTable = (props: ThoughtsTableProps) => {
                   }
                   value={negativeThought.percentage.before}
                   customTailwindStyles="border-r-2 w-1/12"
+                  gradientEnabled={true}
                 ></PercentageCell>
                 <PercentageCell
                   setValue={(value) =>
@@ -164,6 +165,7 @@ export const ThoughtsTable = (props: ThoughtsTableProps) => {
                   }
                   value={negativeThought.percentage.after}
                   customTailwindStyles="w-1 border-r-2"
+                  gradientEnabled={true}
                 ></PercentageCell>
                 <td className="p-4 border-r-2">
                   {negativeThought.distortions}
@@ -189,6 +191,7 @@ export const ThoughtsTable = (props: ThoughtsTableProps) => {
                   }
                   value={negativeThought.positiveThought.beliefPercentage}
                   customTailwindStyles="border-r-2"
+                  gradientEnabled={true}
                 ></PercentageCell>
               </tr>
             );
