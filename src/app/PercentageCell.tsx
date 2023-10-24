@@ -3,13 +3,16 @@
 import { useEffect, useState } from "react";
 
 interface PercentageCellProps {
+  enabled: boolean;
   value: number;
   setValue: (value: number) => void;
   gradientEnabled: boolean;
+  invertGradient?: boolean;
   customTailwindStyles?: string;
 }
 export const PercentageCell = (props: PercentageCellProps) => {
   const [bgHexCode, setBgHexCode] = useState<string>("#FFFFF");
+  const [touched, setTouched] = useState<boolean>(false);
 
   const onCellChange = (e: React.FormEvent<HTMLInputElement>) => {
     // Apply validation logic
@@ -17,13 +20,15 @@ export const PercentageCell = (props: PercentageCellProps) => {
     isNaN(cellValue)
       ? props.setValue(0)
       : props.setValue(Math.min(Math.max(cellValue, 0), 100));
+    setTouched(true);
   };
 
   useEffect(() => {
-    if (props.gradientEnabled) {
-      setBgHexCode(hslToHex((props.value), 50, 70));
+    if (props.gradientEnabled && touched) {
+      const value = props.invertGradient ? props.value : 100 - props.value
+      setBgHexCode(hslToHex(value, 50, 70));
     }
-  }, [props.value])
+  }, [props.value, touched]);
 
   // Credit to icl7126 from stackoverflow.com
   const hslToHex = (h: number, s: number, l: number): string => {
@@ -50,8 +55,17 @@ export const PercentageCell = (props: PercentageCellProps) => {
         value={props.value}
         onChange={onCellChange}
         style={{ backgroundColor: bgHexCode }}
+        disabled={!props.enabled}
       ></input>
-      <input className="w-10/12" type="range" min="0" max="100" value={props.value} onChange={onCellChange}></input>
+      <input
+        className="w-10/12"
+        type="range"
+        min="0"
+        max="100"
+        disabled={!props.enabled}
+        value={props.value}
+        onChange={onCellChange}
+      ></input>
     </td>
   );
 };

@@ -72,6 +72,7 @@ export const EmotionsTable = (props: EmotionTableProps) => {
           </td>
           <PercentageCell
             customTailwindStyles="border-r-2"
+            enabled={firstEmotion.specifics.filter(s => s.selected).length > 0}
             setValue={(value) =>
               percentageCellSetValue(firstEmotion.id, value, "Before")
             }
@@ -81,6 +82,7 @@ export const EmotionsTable = (props: EmotionTableProps) => {
           ></PercentageCell>
           <PercentageCell
             customTailwindStyles="border-r-2"
+            enabled={firstEmotion.specifics.filter(s => s.selected).length > 0}
             setValue={(value) =>
               percentageCellSetValue(firstEmotion.id, value, "After")
             }
@@ -106,6 +108,7 @@ export const EmotionsTable = (props: EmotionTableProps) => {
           </td>
           <PercentageCell
             customTailwindStyles="border-r-2"
+            enabled={secondEmotion.specifics.filter(s => s.selected).length > 0}
             setValue={(value) =>
               percentageCellSetValue(secondEmotion.id, value, "Before")
             }
@@ -115,6 +118,7 @@ export const EmotionsTable = (props: EmotionTableProps) => {
           ></PercentageCell>
           <PercentageCell
             customTailwindStyles="border-r-2"
+            enabled={secondEmotion.specifics.filter(s => s.selected).length > 0}
             setValue={(value) =>
               percentageCellSetValue(secondEmotion.id, value, "After")
             }

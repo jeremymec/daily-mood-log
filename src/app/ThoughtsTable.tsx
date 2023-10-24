@@ -154,6 +154,7 @@ export const ThoughtsTable = (props: ThoughtsTableProps) => {
                   value={negativeThought.percentage.before}
                   customTailwindStyles="border-r-2 w-1/12"
                   gradientEnabled={true}
+                  enabled={true}
                 ></PercentageCell>
                 <PercentageCell
                   setValue={(value) =>
@@ -163,6 +164,7 @@ export const ThoughtsTable = (props: ThoughtsTableProps) => {
                       "After"
                     )
                   }
+                  enabled={true}
                   value={negativeThought.percentage.after}
                   customTailwindStyles="w-1 border-r-2"
                   gradientEnabled={true}
@@ -192,6 +194,8 @@ export const ThoughtsTable = (props: ThoughtsTableProps) => {
                   value={negativeThought.positiveThought.beliefPercentage}
                   customTailwindStyles="border-r-2"
                   gradientEnabled={true}
+                  enabled={true}
+                  invertGradient={true}
                 ></PercentageCell>
               </tr>
             );
