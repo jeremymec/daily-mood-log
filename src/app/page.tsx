@@ -3,8 +3,7 @@
 import { useState } from "react";
 import { EmotionsTable } from "./EmotionsTable";
 import { ThoughtsTable } from "./ThoughtsTable";
-
-type Distortion = "A" | "B";
+import { Distortions } from "./Distortions";
 
 export interface Emotion {
   id: number;
@@ -26,7 +25,7 @@ export interface NegativeThought {
     before: number;
     after: number;
   };
-  distortions: Distortion[];
+  distortions: [];
   positiveThought: PositiveThought;
 }
 
@@ -34,6 +33,13 @@ export interface PositiveThought {
   number: number;
   text: string;
   beliefPercentage: number;
+}
+
+export interface Distortion {
+  id: number;
+  name: string;
+  description: string;
+  color: string;
 }
 
 const Home = () => {
@@ -136,9 +142,8 @@ const Home = () => {
         { name: "furious", selected: false, color: "#ff2222" },
       ],
       percentage: { before: 0, after: 0 },
-    }
-  ]
-  );
+    },
+  ]);
   const [negativeThoughts, setNegativeThoughts] = useState<NegativeThought[]>([
     {
       text: "",
@@ -155,6 +160,74 @@ const Home = () => {
       },
     },
   ]);
+  const distortions: Distortion[] = [
+    {
+      id: 0,
+      name: "All-or-Nothing Thinking",
+      description: "You view things in absolute, black-and-white categories.",
+      color: "rgba(255, 87, 51, 0.3)",
+    },
+    {
+      id: 1,
+      name: "Overgeneralization",
+      description: "You view a negative event as a never-ending pattern of defeat: 'This always happens!'",
+      color: "rgba(51, 255, 87, 0.3)",
+    },
+    {
+      id: 2,
+      name: "Mental Filter",
+      description: "You dwell on the negatives and ignore the positives.",
+      color: "rgba(87, 51, 255, 0.3)",
+    },
+    {
+      id: 3,
+      name: "Discounting the Positive",
+      description: "You insist that your positive qualities don't count.",
+      color: "rgba(255, 153, 51, 0.3)",
+    },
+    {
+      id: 4,
+      name: "Jumping to Conclusions",
+      description: "You jump to conclusions not warranted by the facts.",
+      color: "rgba(51, 153, 255, 0.3)",
+    },
+    {
+      id: 5,
+      name: "Mind-Reading",
+      description: "You assume that people are reacting negatively to you.",
+      color: "rgba(153, 51, 255, 0.3)",
+    },
+    {
+      id: 6,
+      name: "Fortune-Telling",
+      description: "You predict that things will turn out badly.",
+      color: "rgba(255, 204, 51, 0.3)",
+    },
+    {
+      id: 7,
+      name: "Magnification and Minimization",
+      description: "You blow things out of proportion or shrink them.",
+      color: "rgba(51, 204, 255, 0.3)",
+    },
+    {
+      id: 8,
+      name: "Emotional Reasoning",
+      description: "You reason from your feelings: 'I feel like an idiot, so I must really be one.'",
+      color: "rgba(204, 51, 255, 0.3)",
+    },
+    {
+      id: 9,
+      name: "Should Statements",
+      description: "You use shoulds, shouldn'ts, musts, oughts, and have tos.",
+      color: "rgba(255, 255, 51, 0.3)",
+    },
+    {
+      id: 10,
+      name: "Blame",
+      description: "You find fault instead of solving the problem.\&#x2022You blame yourself for something you weren't entirely responsible for. You blame others and overlook ways you contributed to the problem.",
+      color: "rgba(51, 255, 204, 0.3)",
+    }
+  ];
 
   const setEmotionsCallback = (
     emotions: (state?: Emotion[] | undefined) => Emotion[]
@@ -191,6 +264,7 @@ const Home = () => {
         negativeThoughts={negativeThoughts}
         setThoughtsCallback={setNegativeThoughtsCallback}
       ></ThoughtsTable>
+      <Distortions distortions={distortions}></Distortions>
     </div>
   );
 };
