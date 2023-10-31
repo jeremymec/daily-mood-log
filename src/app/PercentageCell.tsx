@@ -51,7 +51,7 @@ export const PercentageCell = (props: PercentageCellProps) => {
       style={{ backgroundColor: bgHexCode }}
     >
       <input
-        className="p-4 w-full text-center font-bold text-lg outline-none "
+        className="p-2 w-full text-center font-bold text-lg outline-none "
         value={props.value}
         onChange={onCellChange}
         style={{ backgroundColor: bgHexCode }}

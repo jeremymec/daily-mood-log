@@ -170,7 +170,8 @@ const Home = () => {
     {
       id: 1,
       name: "Overgeneralization",
-      description: "You view a negative event as a never-ending pattern of defeat: 'This always happens!'",
+      description:
+        "You view a negative event as a never-ending pattern of defeat: 'This always happens!'",
       color: "rgba(51, 255, 87, 0.3)",
     },
     {
@@ -188,45 +189,43 @@ const Home = () => {
     {
       id: 4,
       name: "Jumping to Conclusions",
-      description: "You jump to conclusions not warranted by the facts.",
+      description:
+        "You jump to conclusions not warranted by the facts. You assume that people are reacting negatively to you. You predict that things will turn out badly.",
       color: "rgba(51, 153, 255, 0.3)",
     },
     {
       id: 5,
-      name: "Mind-Reading",
-      description: "You assume that people are reacting negatively to you.",
-      color: "rgba(153, 51, 255, 0.3)",
-    },
-    {
-      id: 6,
-      name: "Fortune-Telling",
-      description: "You predict that things will turn out badly.",
-      color: "rgba(255, 204, 51, 0.3)",
-    },
-    {
-      id: 7,
       name: "Magnification and Minimization",
       description: "You blow things out of proportion or shrink them.",
       color: "rgba(51, 204, 255, 0.3)",
     },
     {
-      id: 8,
+      id: 6,
       name: "Emotional Reasoning",
-      description: "You reason from your feelings: 'I feel like an idiot, so I must really be one.'",
+      description:
+        "You reason from your feelings: 'I feel like an idiot, so I must really be one.'",
       color: "rgba(204, 51, 255, 0.3)",
     },
     {
-      id: 9,
+      id: 7,
       name: "Should Statements",
       description: "You use shoulds, shouldn'ts, musts, oughts, and have tos.",
       color: "rgba(255, 255, 51, 0.3)",
     },
     {
-      id: 10,
-      name: "Blame",
-      description: "You find fault instead of solving the problem.\&#x2022You blame yourself for something you weren't entirely responsible for. You blame others and overlook ways you contributed to the problem.",
+      id: 8,
+      name: "Labeling",
+      description:
+        "Instead of saying “I made a mistake,” you say, “I’m a jerk,” or “I’m a loser.”",
       color: "rgba(51, 255, 204, 0.3)",
-    }
+    },
+    {
+      id: 9,
+      name: "Blame",
+      description:
+        "You find fault instead of solving the problem. You blame yourself for something you weren't entirely responsible for. You blame others and overlook ways you contributed to the problem.",
+      color: "rgba(51, 255, 204, 0.3)",
+    },
   ];
 
   const setEmotionsCallback = (
@@ -254,17 +253,25 @@ const Home = () => {
           onChange={(e) => setUpsettingEvent(e.currentTarget.value)}
         ></input>
       </div>
-
+      <p className="text-center text-2xl py-2 font-bold">Step 1: Emotions</p>
       <EmotionsTable
         emotions={emotions}
         setEmotionsCallback={setEmotionsCallback}
       ></EmotionsTable>
       <br></br>
+      <p className="text-center text-2xl py-2 font-bold">Step 2: Thoughts</p>
       <ThoughtsTable
         negativeThoughts={negativeThoughts}
         setThoughtsCallback={setNegativeThoughtsCallback}
       ></ThoughtsTable>
-      <Distortions distortions={distortions}></Distortions>
+      <br></br>
+      <br></br>
+      <div className="">
+        <p className="text-center text-2xl py-2 font-bold">
+          Cognative Distortions
+        </p>
+        <Distortions distortions={distortions}></Distortions>
+      </div>
     </div>
   );
 };

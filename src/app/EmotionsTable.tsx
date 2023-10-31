@@ -138,12 +138,12 @@ export const EmotionsTable = (props: EmotionTableProps) => {
     <table className="table-auto w-full">
       <thead className="border-b">
         <tr className="bg-gray-100">
-          <th className="text-center p-4 font-medium w-3/12">Emotions</th>
-          <th className="text-center p-4 font-medium w-1/12">Before %</th>
-          <th className="text-center p-4 font-medium w-1/12 border-r-2">After %</th>
-          <th className="text-center p-4 font-medium w-3/12">Emotions</th>
-          <th className="text-center p-4 font-medium w-1/12">Before %</th>
-          <th className="text-center p-4 font-medium w-1/12">After %</th>
+          <th className="text-center p-3 font-medium w-3/12">Emotions</th>
+          <th className="text-center p-3 font-medium w-1/12 whitespace-nowrap">Before %</th>
+          <th className="text-center p-3 font-medium w-1/12 border-r-2 whitespace-nowrap">After %</th>
+          <th className="text-center p-3 font-medium w-3/12">Emotions</th>
+          <th className="text-center p-3 font-medium w-1/12 whitespace-nowrap">Before %</th>
+          <th className="text-center p-3 font-medium w-1/12 whitespace-nowrap">After %</th>
         </tr>
       </thead>
       <tbody>{emotionArrayToJSX(props.emotions)}</tbody>

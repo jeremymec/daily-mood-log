@@ -101,34 +101,34 @@ export const ThoughtsTable = (props: ThoughtsTableProps) => {
       <table className="table-fixed w-full">
         <thead className="border-b">
           <tr className="bg-gray-100">
-            <th className="text-center p-4 font-medium w-"></th>
-            <th className="text-center p-4 font-medium w-[27.9%]">
+            <th className="text-center p-3 font-medium w-"></th>
+            <th className="text-center p-3 font-medium w-[27.9%]">
               Negative Thoughts
             </th>
-            <th className="text-center p-4 font-medium w-1/12">% Before</th>
-            <th className="text-center p-4 font-medium w-1/12">% After</th>
-            <th className="text-center p-4 font-medium w-2/12">Distortions</th>
-            <th className="text-center p-4 font-medium w-[27.9%]">
+            <th className="text-center p-3 font-medium w-1/12">% Before</th>
+            <th className="text-center p-3 font-medium w-1/12">% After</th>
+            <th className="text-center p-3 font-medium w-2/12">Distortions</th>
+            <th className="text-center p-3 font-medium w-[27.9%]">
               Positive Thoughts
             </th>
-            <th className="text-center p-4 font-medium w-1/12">% Belief</th>
+            <th className="text-center p-3 font-medium w-1/12">% Belief</th>
           </tr>
         </thead>
         <tbody className="w-full">
           {props.negativeThoughts.map((negativeThought, key) => {
             return (
               <tr key={key} className="border-b hover:bg-gray-50 h-auto">
-                {negativeThought.number !== 1 ? (
+                {props.negativeThoughts.length <= 1 ? (
+                  <td className="bg-red-200 text-white font-bold rounded text-center">
+                    -
+                  </td>
+                ) : (
                   <td
                     className="bg-red-500 hover:bg-red-700 text-white font-bold rounded text-center"
                     onClick={() =>
                       onRemoveThoughtButtonPress(negativeThought.number)
                     }
                   >
-                    -
-                  </td>
-                ) : (
-                  <td className="bg-red-200 text-white font-bold rounded text-center">
                     -
                   </td>
                 )}
