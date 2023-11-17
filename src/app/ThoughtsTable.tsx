@@ -3,6 +3,7 @@ import { produce } from "immer";
 import { PercentageCell } from "./PercentageCell";
 import { NegativeThought } from "./page";
 import TextareaAutosize from "react-textarea-autosize";
+import { DistortionsCell } from "./DistortionsCell";
 
 export interface ThoughtsTableProps {
   negativeThoughts: NegativeThought[];
@@ -170,7 +171,7 @@ export const ThoughtsTable = (props: ThoughtsTableProps) => {
                   gradientEnabled={true}
                 ></PercentageCell>
                 <td className="p-4 border-r-2">
-                  {negativeThought.distortions}
+                  <DistortionsCell></DistortionsCell>
                 </td>
                 <td className="p-4 border-r-2">
                   <TextareaAutosize
